@@ -1,0 +1,33 @@
+version: '2'
+services:
+  php:
+    build: ./php
+    volumes:
+      - ../:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - db
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+    - ../:/var/www/html
+    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+    - php
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: crowdfunding
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+volumes:
+  postgresql:
+  postgresql_data:
