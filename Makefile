@@ -13,3 +13,9 @@ down:
 	$(DC) down
 test:
 	$(DC) run php php bin/phpunit
+frontend-compile:
+	yarn encore dev
+frontend-compile-prod:
+	yarn encore production
+frontend-watch:
+	yarn encore dev --watch
